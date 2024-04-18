@@ -6,15 +6,14 @@ export const headerLinks = [
     {
       label: 'Create Event',
       route: '/events/create',
-    },
-   
+  },
   {
-    label: 'Sponsors',
-    route : '/sponsor',
+    label: 'Sponsor',
+    route: '/sponsor',
   },
   {
     label: 'Budget',
-    route : '/budget',
+    route: '/budget',
   },
   {
     label: 'My Profile',

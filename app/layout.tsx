@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "EventMaven",
   description: "It's a platform where events can be managed.",
   icons: {
-    icon: "assets/images/logo.svg",
+    icon: "assets/images/logo_head.svg",
   },
 };
 
