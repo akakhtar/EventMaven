@@ -25,6 +25,10 @@ module.exports = withUt({
           DEFAULT: "#C53683",
           foreground: "hsl(var(--primary-foreground))",
         },
+        percentage: {
+          200: "#FFCCEA",
+          500: "#C53683",
+        },
         coral: {
           500: "#15BF59",
         },
