@@ -9,11 +9,11 @@ export const headerLinks = [
     },
    
   {
-    label: 'Manage Sponsor',
+    label: 'Sponsors',
     route : '/sponsor',
   },
   {
-    label: 'Manage Budget',
+    label: 'Budget',
     route : '/budget',
   },
   {
