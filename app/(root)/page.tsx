@@ -25,7 +25,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
         <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 2xl:gap-0">
           <div className="flex flex-col justify-center gap-8">
             <h1 className="h2-bold">Empowering Your Events, Elevating Connections! Our Platform, Your Ultimate Solution for Event Management and Beyond!</h1>
-            <p className="p-regular-20 md:p-regular-24">Book and learn helpful tips from 3,168+ mentors in world-class companies with our global community.</p>
+            <p className="p-regular-20 md:p-regular-24"></p>
             <Button size="lg" asChild className="button w-full sm:w-fit">
               <Link href="#events">
                 Explore Now
