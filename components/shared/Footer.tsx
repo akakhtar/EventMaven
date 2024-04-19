@@ -14,7 +14,7 @@ const Footer = () => {
       <div className='flex-center wrapper flex-between flex flex-col gap-4 p-5 text-center sm:flex-row '>
       
         <div className="flex flex-col items-center gap-4">
-      <p className="text-lg font-bold">Follow us on:</p>
+      <p className="text-lg font-bold">Follow Us:</p>
       <div className="flex gap-4">
         <a href="https://www.youtube.com/" target="_blank" className="text-percentage-500 hover:text-percentage-200">
         <FaYoutube size={24} />

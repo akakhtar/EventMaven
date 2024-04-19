@@ -49,7 +49,7 @@ const SponsorPage: React.FC = () => {
         ))}
           </div>
           <Button asChild size="lg" className="button hidden sm:flex">
-            <Link href="/manageSponsor">
+            <Link href="/sponsor/manageSponsor">
               Manage Sponsor
             </Link>
           </Button>

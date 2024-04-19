@@ -1,148 +1,81 @@
 'use client'
-import React, { useState } from 'react';
-import BudgetCard from '@/components/shared/BudgetCard'; // Adjust the import path based on your project structure
+import React,{useState} from 'react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button';
-import { Input } from "@/components/ui/input"
+import { Input } from '@/components/ui/input';
 
-const BudgetDashboard: React.FC = () => {
-  // State for event budget
-  const [eventBudget, setEventBudget] = useState<number | null>(null);
+const BudgetHome: React.FC = () => {
 
-  // State for expenses
-  const [expenses, setExpenses] = useState<{ category: string; amount: number }[]>([]);
-
-  // State for tracking expense category and amount
-  const [expenseCategory, setExpenseCategory] = useState<string>('');
-  const [expenseAmount, setExpenseAmount] = useState<string>('');
-
- // State for budget allocation
-  const [allocatedBudget, setAllocatedBudget] = useState<number | null>(null);
-  
   const [eventName, setEventName] = useState('');
+ 
+  const [eventBudget, setEventBudget] = useState('');
 
-  const saveEventName = (name: string) => {
-    setEventName(name);
-  };
+  // const eventData = [
+  //   { eventName: 'Event 1', allocatedBudget: '1000', availableBudget: '800' },
+  //   { eventName: 'Event 2', allocatedBudget: '2000', availableBudget: '1500' },
+  //   { eventName: 'Event 3', allocatedBudget: '1500', availableBudget: '1000' },
+  // ];
 
-  // Function to allocate event budget
-  const allocateBudget = () => {
-    if (allocatedBudget !== null) {
-      setEventBudget(allocatedBudget);
+  const [eventData, setEventData] = useState<{ eventName: string; allocatedBudget: string; availableBudget: string }[]>([]);
+
+  // Function to add a new event
+  const addEvent = () => {
+    if (eventName && eventBudget) {
+      const newEvent = { eventName, allocatedBudget: eventBudget, availableBudget: eventBudget };
+      setEventData([...eventData, newEvent]);
+      setEventName('');
+      setEventBudget('');
     }
   };
-  // Function to handle adding expense
-  const addExpense = () => {
-    if (expenseCategory !== '' && expenseAmount !== '') {
-      setExpenses([...expenses, { category: expenseCategory, amount: Number(expenseAmount) }]);
-      // Reset expense category and amount fields
-      setExpenseCategory('');
-      setExpenseAmount('');
-    }
-  };
-
-  // Function to calculate total expenses
-  const calculateTotalExpenses = () => {
-    return expenses.reduce((total, expense) => total + expense.amount, 0);
-  };
-
-  // Function to calculate available budget
-  const calculateAvailableBudget = () => {
-    if (eventBudget === null) {
-      return 0;
-    }
-    return eventBudget - calculateTotalExpenses();
-  };
-
-  // Function to calculate percentage for each category
-  const calculateCategoryPercentage = (category: string) => {
-    const totalExpenses = calculateTotalExpenses();
-    const categoryExpenses = expenses.filter((expense) => expense.category === category).reduce((total, expense) => total + expense.amount, 0);
-    return totalExpenses === 0 ? 0 : Math.round((categoryExpenses / totalExpenses) * 100);
-  };
-
-
-   // Function to reset all values
-   const resetValues = () => {
-    setEventBudget(null);
-    setAllocatedBudget(null);
-    setExpenses([]);
-    setExpenseCategory('');
-    setExpenseAmount('');
-  };
+ 
   return (
-     <div className='container mx-auto p-4'>
-      <div className='flex justify-center mb-4'>
-      <h1 className="text-2xl font-semibold ">Budget Management</h1>
+    <div className='container mx-auto p-4'>
+      <h2 className='text-lg font-semibold mb-4'>Allocated Budget for Each Event</h2>
+      <table className="table-auto border-collapse border border-gray-800 w-full">
+        <thead>
+          <tr>
+            <th className="border border-gray-800 px-4 py-2">Event Name</th>
+            <th className="border border-gray-800 px-4 py-2">Allocated Budget</th>
+            <th className="border border-gray-800 px-4 py-2">Available Budget</th>
+          </tr>
+        </thead>
+        <tbody>
+          {eventData.map((event, index) => (
+            <tr key={index}>
+              
+              <td className="border border-gray-800 px-4 py-2"><Link href={"/budget/manageBudget"}>{event.eventName} </Link></td>
+              <td className="border border-gray-800 px-4 py-2">${event.allocatedBudget}</td>
+              <td className="border border-gray-800 px-4 py-2">${event.availableBudget}</td>
+                          
+            </tr>
+
+          ))}
+        </tbody>
+      </table>
+      <div className='bg-white rounded shadow p-4'>
+        <h2 className='text-lg font-semibold mb-2'>Event Name:</h2>
+        <Input
+          type="text"
+          className='border border-gray-300 rounded p-2 mb-4'
+          placeholder='event event name (HackathonX 2024)'
+          value={eventName}
+          onChange={(e) => setEventName(e.target.value)}
+        />
+        <h2 className='text-lg font-semibold mb-2'>Event Budget:</h2>
+        <Input
+          type='text'
+          className='border corder-gray-300 rounded p-2 mb-4'
+          placeholder='enter budget amount (10000)'
+          value={eventBudget}
+          onChange={(e) => setEventBudget(e.target.value)}
+        />
+         <Button onClick={addEvent} className='button border rounded p-4 mt-3'>
+        Add Event
+        </Button>
       </div>
-
-    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-        
-      <BudgetCard title="Total Budget" value={eventBudget === null ? 'Not allocated' : `$${eventBudget}`} />
-
-  
-      <BudgetCard title="Total Expenses" value={`$${calculateTotalExpenses()}`} />
-
-      
-      <BudgetCard title="Available Budget" value={eventBudget === null ? 'Not allocated' : calculateAvailableBudget() === null ? 'Calculating...' : `$${calculateAvailableBudget()}`} />
      
-        <div className="bg-white rounded shadow p-4">
-  <h2 className="text-lg font-semibold mb-2">Enter Event Name</h2>
-  <Input
-    type="text"
-    className="border border-gray-300 rounded p-2 mb-2"
-    placeholder="Enter event name"
-    value={eventName}
-    onChange={(e) => setEventName(e.target.value)}
-  />
-</div>
+    </div>
+  )
+}
 
-  
-<div className="bg-white rounded shadow p-4">
-  <h2 className="text-lg font-semibold mb-2">Allocate Event Budget</h2>
-  <Input
-    type="number"
-    className="border border-gray-300 rounded p-2 mb-2"
-    placeholder="Enter budget amount"
-    value={allocatedBudget === null ? '' : allocatedBudget.toString()} // Convert allocatedBudget to string
-    onChange={(e) => setAllocatedBudget(parseInt(e.target.value))}
-  />
-  <Button onClick={allocateBudget} className="border rounded p-2">Add Budget</Button>
-</div>
-
-
-
-    
-<div className="bg-white rounded shadow p-4">
-  <h2 className="text-lg font-semibold mb-2">Enter Expenses</h2>
-  <Input type="text" className="border border-gray-300 rounded p-2 mb-2" placeholder="Expense category" value={expenseCategory} onChange={(e) => setExpenseCategory(e.target.value)} />
-  <Input type="number" className="border border-gray-300 rounded p-2 mb-2" placeholder="Expense amount" value={expenseAmount} onChange={(e) => setExpenseAmount(e.target.value)} />
-  <Button onClick={addExpense} className="border rounded p-2">Add Expense</Button>
-   
-   {eventBudget !== null && calculateAvailableBudget() !== null && calculateAvailableBudget() < 0 && (
-    <p className="text-red-500 mt-2">Warning: Your expenses have exceeded the allocated budget!</p>
-  )}
-      </div>
-      
-   
-<hr className="mb-4" />
-
-
-    
-      <div className="bg-white rounded shadow p-4">
-        <h2 className="text-lg font-semibold mb-2">Expense Categories</h2>
-         
-        {Array.from(new Set(expenses.map((expense) => expense.category))).map((category, index) => (
-          <BudgetCard key={index} title={category} value={`$${expenses.filter((expense) => expense.category === category).reduce((total, expense) => total + expense.amount, 0)}`} percentage={calculateCategoryPercentage(category)} />
-        ))}
-         
-      </div>
-
-
-    
-     <Button onClick={resetValues} className="fixed right-4 bottom-4">Reset</Button>
-      </div>
-      </div>
-  );
-};
-
-export default BudgetDashboard;
+export default BudgetHome
