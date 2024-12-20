@@ -1,7 +1,3 @@
-Here's a revised and concise version of your README file with the added features:
-
----
-
 # Event Management Platform - Full Stack Solution
 
 This full-stack event management platform, built with **Next.js 14**, provides a comprehensive solution for managing events globally. It allows users to create, view, and manage events, process payments via **Stripe**, and more. Additionally, new features have been introduced to enhance event organization and sponsor management, perfect for showcasing your project to recruiters.
